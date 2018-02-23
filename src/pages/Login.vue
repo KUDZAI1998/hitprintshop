@@ -4,8 +4,13 @@
       <v-container>
         <h3 class="login-title">Login</h3>
       
-        <v-btn block class="blue white--text mb-3"> <v-icon left>mdi-facebook</v-icon> Login with facebook</v-btn>
-        <v-btn block class="red white--text mb-3"><v-icon left>mdi-google</v-icon> Login with google</v-btn>
+        <v-btn block class="blue white--text mb-3">
+          <span class="mr-3 bolder">F</span> Login with facebook
+        </v-btn>
+        <v-btn block class="red white--text mb-3">
+          <span class="mr-3 bolder">G</span> Login with google
+        </v-btn>
+
         <hr>
         <v-btn outline huge block class="mt-3">Join</v-btn>
       </v-container>
@@ -42,5 +47,15 @@ export default {
     display: block;
     margin: 20px auto;
     text-align: center;
+  }
+
+  .bolder {
+    font-size: 25px;
+    display: block;
+    height: 35px;
+    width: 35px;
+    border-radius: 50%;
+    border: #fff 2px solid;
+    font-weight: bolder
   }
 </style>
