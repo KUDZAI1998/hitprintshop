@@ -5,6 +5,7 @@ import Login from '@/pages/Login'
 import JoinUs from '@/pages/JoinUs'
 import Timeline from '@/pages/Timeline'
 import SellerProfile from '@/pages/SellerProfile'
+import ProductDetails from '@/pages/ProductDetails'
 
 Vue.use(Router)
 
@@ -34,6 +35,11 @@ export default new Router({
       path: '/sellers/:username',
       name: 'SellerProfile',
       component: SellerProfile
+    },
+    {
+      path: '/products/:productId',
+      name: 'ProductDetails',
+      component: ProductDetails
     }
   ]
 })
