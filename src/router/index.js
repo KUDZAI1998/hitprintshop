@@ -4,6 +4,7 @@ import HelloWorld from '@/components/HelloWorld'
 import Login from '@/pages/Login'
 import JoinUs from '@/pages/JoinUs'
 import Timeline from '@/pages/Timeline'
+import SellerProfile from '@/pages/SellerProfile'
 
 Vue.use(Router)
 
@@ -28,6 +29,11 @@ export default new Router({
       path: '/timeline',
       name: 'Timeline',
       component: Timeline
+    },
+    {
+      path: '/sellers/:username',
+      name: 'SellerProfile',
+      component: SellerProfile
     }
   ]
 })
