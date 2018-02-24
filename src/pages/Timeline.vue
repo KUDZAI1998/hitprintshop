@@ -1,0 +1,148 @@
+<template>
+  <div>
+    <v-container>
+      <v-text-field placeholder="Search" prepend-icon="search" solo></v-text-field>
+
+    <v-container fluid grid-list-md>
+      <v-layout row wrap>
+        <v-flex xs12 sm6 md4 xl3 v-for="i in 10" :key="i">
+          <v-card class="elevation-3">
+            <v-card-media
+              height="200px"
+              :src="goods[0].thumbnail_url()" alt="" class="media"> 
+              <div class="media-title-tile">
+                <span class="media-title">{{goods[0].title}} </span>
+                <v-chip class="condition-chip" small label color="white" text-color="primary">
+                  <v-icon left>label</v-icon> {{goods[0].condition}}
+                </v-chip>
+              </div>
+            </v-card-media>
+
+            <v-card-title>
+              <div class="headline" style="font-weight: bold">${{goods[0].price}}</div>
+              <star-rating v-model="goods[0].ratings" :star-size="16" text-class="white--text" class="ml-2" read-only/>
+              <v-spacer></v-spacer>
+              <div>
+                <span>Posted by <a>@kp</a></span>
+                <br>
+                <span>3 days ago</span> <!-- install momentjs and format the date -->
+              </div> 
+            </v-card-title>
+
+            <p class="ml-3">
+            {{ goods[0].short_description}}
+            </p>
+            
+            <v-card-actions>
+              <v-btn flat> <v-icon>favorite_border</v-icon> {{goods[0].likes_count | normalise}}</v-btn>
+              <v-btn flat> <v-icon>comments</v-icon> {{ goods[0].comments.length }}</v-btn>
+              <v-btn class="primary white--text elevation-1"> View Deal<v-icon>arrow_forward</v-icon></v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-flex>
+      </v-layout>
+    </v-container>
+    </v-container>
+  </div>
+</template>
+
+<script>
+import {
+  VTextField,
+  VIcon,
+  VChip
+} from 'vuetify'
+
+import * as VCard from 'vuetify/es5/components/VCard'
+import StarRating from 'vue-star-rating'
+export default {
+  name: 'Timeline',
+  components: {
+    VCard: VCard.VCard,
+    VCardTitle: VCard.VCardTitle,
+    VCardMedia: VCard.VCardMedia,
+    VCardActions: VCard.VCardActions,
+    VTextField,
+    VIcon,
+    VChip,
+    StarRating
+  },
+  data () {
+    return {
+      goods: [
+        {
+          id: 1,
+          title: 'Dell xps 13',
+          short_description: 'The best on campus!',
+          price: 1.2,
+          thumbnail_url: () => `https://unsplash.it/150/300?image=${Math.floor(Math.random() * 100) + 1}`,
+          ratings: 3.5,
+          available: true,
+          condition: 'new',
+          likes_count: 1250000000,
+          posted_on: new Date(),
+          category: 'technology',
+          posted_by: '@woody',
+          comments: [
+            {
+              username: '@kp',
+              date_comment: new Date(),
+              comment: 'I definitely love this concept'
+            }
+          ]
+        }
+      ]
+    }
+  },
+  filters: {
+    /** Return a stringified version of a very large number
+     * e.g 1000 => 1k, 1000000 => 1M, 1000000000 => 1B
+     */
+    normalise (value) {
+      const billion = 1000000000
+      const million = 1000000
+      const thousand = 1000
+
+      if (value >= billion) return `${value / billion}B`
+      if (value >= million) return `${value / million}M`
+      if (value >= thousand) return `${value / thousand}K`
+
+      // If too small just return the value
+      return value
+    }
+  }
+}
+</script>
+
+<style scoped>
+  /* show a background while the images are loadng */
+  .media {
+    background: #466368;
+    background: -webkit-linear-gradient(#648880, #293f50);
+    background: -moz-linear-gradient(#648880, #293f50);
+    background: -o-linear-gradient(#648880, #293f50);
+    background: linear-gradient(#648880, #293f50);
+  }
+
+  /* a transparent bacground and increase the font size && weight */
+  .media-title-tile {
+    background-color: #b2b2b2;
+    background-color: rgba(0, 0, 0, .3);
+    width: 100%;
+    padding: 10px;
+    margin-top: 155px; /* the height of the card-media - 40 */
+    position: relative;
+  }
+
+  .media-title {
+    font-weight: bolder;
+    font-size: 20px;
+    color: snow
+  }
+
+  .condition-chip {
+    position: absolute;
+    right: 10px;
+    bottom: 5px;
+  }
+</style>
