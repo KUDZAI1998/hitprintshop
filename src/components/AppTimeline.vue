@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid grid-list-md>
+  <v-container grid-list-md>
     <v-layout row wrap>
       <v-flex xs12 sm6 md4 xl3 v-for="i in 10" :key="i">
         <v-card class="elevation-3">
