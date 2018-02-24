@@ -19,7 +19,7 @@
             <star-rating v-model="goods[0].ratings" :star-size="16" text-class="white--text" class="ml-2" read-only/>
             <v-spacer></v-spacer>
             <div>
-              <span>Posted by <a>@kp</a></span>
+              <span>Posted by <a href="#/sellers/@kp">@kp</a></span>
               <br>
               <span style="color: gray">3 days ago</span> <!-- install momentjs and format the date -->
             </div> 
