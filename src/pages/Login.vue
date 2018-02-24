@@ -12,7 +12,7 @@
         </v-btn>
 
         <hr>
-        <v-btn outline huge block class="mt-3">Join</v-btn>
+        <v-btn outline large block class="mt-3" @click="$router.push('/join-us')">Join Us</v-btn>
       </v-container>
     </v-card>
   </div>
