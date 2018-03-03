@@ -8,18 +8,18 @@
             :src="goods[0].thumbnail_url()" alt="" class="media"> 
             <div class="media-title-tile">
               <span class="media-title">{{goods[0].title}} </span>
-              <v-chip class="condition-chip" small label color="white" text-color="primary">
-                <v-icon left>label</v-icon> {{goods[0].condition}}
-              </v-chip>
+              <v-btn flat class="condition-chip white--text"> View Deal<v-icon>arrow_forward</v-icon></v-btn>
             </div>
           </v-card-media>
 
           <v-card-title>
-            <div class="headline" style="font-weight: bold">${{goods[0].price}}</div>
-            <star-rating v-model="goods[0].ratings" :star-size="16" text-class="white--text" class="ml-2" read-only/>
+            <div>
+              <h3 class="headline" style="font-weight: bold">${{goods[0].price}}</h3>
+              <star-rating v-model="goods[0].ratings" :star-size="16" text-class="white--text" class="ml-2" read-only/>
+            </div>
             <v-spacer></v-spacer>
             <div>
-              <span>Posted by <a href="#/sellers/@kp">@kp</a></span>
+              <span>Posted by <a :href="`#/sellers/${goods[0].posted_by}`">{{ goods[0].posted_by }}</a></span>
               <br>
               <span style="color: gray">3 days ago</span> <!-- install momentjs and format the date -->
             </div> 
@@ -29,9 +29,8 @@
           </p>
           
           <v-card-actions>
-            <v-btn flat> <v-icon>favorite_border</v-icon> {{goods[0].likes_count | normalise}}</v-btn>
-            <v-btn flat> <v-icon>comments</v-icon> {{ goods[0].comments.length }}</v-btn>
-            <v-btn class="primary white--text elevation-1"> View Deal<v-icon>arrow_forward</v-icon></v-btn>
+            <v-btn small flat> <v-icon>favorite_border</v-icon> {{goods[0].likes_count | normalise}}</v-btn>
+            <v-btn small flat> <v-icon>comments</v-icon> {{ goods[0].comments.length }}</v-btn>
           </v-card-actions>
         </v-card>
       </v-flex>
@@ -123,7 +122,7 @@ export default {
     background-color: rgba(0, 0, 0, .3);
     width: 100%;
     padding: 10px;
-    margin-top: 155px; /* the height of the card-media - 40 */
+    margin-top: 150px; /* the height of the card-media - 35 */
     position: relative;
   }
 
@@ -137,7 +136,7 @@ export default {
 
   .condition-chip {
     position: absolute;
-    right: 10px;
-    bottom: 5px;
+    right: 0px;
+    bottom: 0px;
   }
 </style>
