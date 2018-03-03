@@ -3,51 +3,51 @@
     <div class="profile-wallpaper">
       <h3 class="profile-username">@kay_p</h3>
       <h5 class="profile-names">Kudakwashe Paradzayi</h5>
-      <v-btn class="primary text-white mt-3 pr-3 pl-4">Follow</v-btn>
+      <v-btn class="primary text--white mt-3 pr-3 pl-4">Follow</v-btn>
       <div class="profile-avatar">
         <v-icon size="80px" color="white">perm_identity</v-icon>
       </div>
+    </div>
     
-      <div class="nav-bar">
-        <v-toolbar
-          color="primary"
-          dark
-          tabs>
-          <v-text-field
-            prepend-icon="search"
-            append-icon="mic"
-            label="Search for products by @Kay_p"
-            solo-inverted
-            class="mx-3"
-            flat/>
-          <v-tabs
-            slot="extension"
-            centered
-            v-model="tabs"
-            slider-color="white"
-            color="transparent">
-            <v-tab href="#products">
-              Products
-            </v-tab>
+    <div class="nav-bar">
+      <v-toolbar
+        color="primary"
+        dark
+        tabs>
+        <v-text-field
+          prepend-icon="search"
+          append-icon="mic"
+          label="Search for products by @Kay_p"
+          solo-inverted
+          class="mx-3"
+          flat/>
+        <v-tabs
+          slot="extension"
+          centered
+          v-model="tabs"
+          slider-color="white"
+          color="transparent">
+          <v-tab href="#products">
+            Products
+          </v-tab>
 
-            <v-tab href="#followers">
-              Followers
-            </v-tab>
-          </v-tabs>
-        </v-toolbar>
+          <v-tab href="#followers">
+            Followers
+          </v-tab>
+        </v-tabs>
+      </v-toolbar>
 
-        <v-tabs-items v-model="tabs" class="mt-3">
-          <v-tab-item id="products">
-            <app-timeline></app-timeline>
-          </v-tab-item>
+      <v-tabs-items v-model="tabs" class="mt-3">
+        <v-tab-item id="products">
+          <app-timeline></app-timeline>
+        </v-tab-item>
 
-          <v-tab-item id="followers">
-            <v-container>
-              Followers
-            </v-container>
-          </v-tab-item>
-        </v-tabs-items>
-      </div>
+        <v-tab-item id="followers">
+          <v-container>
+            Followers
+          </v-container>
+        </v-tab-item>
+      </v-tabs-items>
     </div>
   </div>
 </template>
