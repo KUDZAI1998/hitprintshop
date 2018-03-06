@@ -1,14 +1,18 @@
 <template>
   <div>
     <v-card class="login-card">
-      <v-container>
+      <div class="primary white--text media-block" style="height: 200px">
+        <v-icon class="media-block-icon white--text">fingerprint</v-icon>
         <h3 class="login-title">Login</h3>
+      </div>
+      <v-container>
       
-        <v-btn block class="blue white--text mb-3">
-          <span class="mr-3 bolder">F</span> Login with facebook
-        </v-btn>
-        <v-btn block class="red white--text mb-3">
+        <v-btn block large class="white red--text mb-3 elevation-1">
           <span class="mr-3 bolder">G</span> Login with google
+        </v-btn>
+
+        <v-btn block large class="white blue--text mb-3 elevation-1">
+          <span class="mr-3 bolder">F</span> Login with facebook
         </v-btn>
 
         <hr>
@@ -41,12 +45,25 @@ export default {
     max-width: 400px;
   }
 
+  .media-block {
+    position: relative;
+  }
+
+  .media-block-icon {
+    position: absolute;
+    font-size: 100px;
+    left: 40%;
+    top: 18%;
+  }
   .login-title {
     font-size: 25px;
     font-weight: lighter;
     display: block;
     margin: 20px auto;
     text-align: center;
+    position: absolute;
+    bottom: 0px;
+    left: 45%
   }
 
   .bolder {
@@ -56,6 +73,7 @@ export default {
     width: 35px;
     border-radius: 50%;
     border: #fff 2px solid;
-    font-weight: bolder
+    font-weight: bolder;
+    margin-bottom: 8px
   }
 </style>
