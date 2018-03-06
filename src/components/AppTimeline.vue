@@ -1,8 +1,8 @@
 <template>
-  <v-container grid-list-md>
+  <v-container fluid grid-list-md class="layout-padding">
     <v-layout row wrap>
       <v-flex xs12 sm6 md4 xl3 v-for="i in 10" :key="i">
-        <v-card class="elevation-3">
+        <v-card class="elevation-3 ma-3">
           <v-card-media
             height="200px"
             :src="goods[0].thumbnail_url()" alt="" class="media"> 
@@ -107,6 +107,9 @@ export default {
 </script>
 
 <style scoped>
+  .layout-padding {
+    padding: 40px;
+  }
   /* show a background while the images are loadng */
   .media {
     background: #466368;
