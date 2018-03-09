@@ -2,14 +2,17 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import HelloWorld from '@/components/HelloWorld'
 import Login from '@/pages/Login'
+import JwtCallback from '@/pages/JwtCallback'
 import JoinUs from '@/pages/JoinUs'
 import Timeline from '@/pages/Timeline'
 import SellerProfile from '@/pages/SellerProfile'
 import ProductDetails from '@/pages/ProductDetails'
 
+import {logout} from '@/utils/auth'
 Vue.use(Router)
 
 export default new Router({
+  mode: 'history',
   routes: [
     {
       path: '/',
@@ -20,6 +23,15 @@ export default new Router({
       path: '/login',
       name: 'Login',
       component: Login
+    },
+    {
+      path: '/logout',
+      beforeEnter: logout
+    },
+    {
+      path: '/auth/jwt/callback',
+      name: 'JwtCallback',
+      component: JwtCallback
     },
     {
       path: '/join-us',

@@ -18,7 +18,7 @@ export const login = ({ username, password, accountType }) => axios.post(
 export function logout (to, from, next) {
   clearAccessToken()
   clearUserProfile()
-  next({ path: '/signin' })
+  next({ path: '/' })
 }
 
 export function requireAuth (to, from, next) {
