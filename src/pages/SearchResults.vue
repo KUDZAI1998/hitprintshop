@@ -3,10 +3,15 @@
     <v-layout row wrap>
       <v-flex xs12 sm4>
         <div class="box">
-          <v-text-field  solo label="Search" v-model="product.title" append-icon="search"></v-text-field>
+          <v-text-field  solo label="Search" v-model="searchString" append-icon="search" @keyup.enter="searchProducts(searchString)"></v-text-field>
         </div>
         <div class="box">
-          <v-list three-line>
+          <div class="text-center" v-if="!items.length" style="width: 100%; height: 200px; padding: 20px">
+            <v-icon class="mt-3 mb-3 grey--text" style="font-size: 60px">hourglass_empty</v-icon>
+            <h3 class="mb-3 ml-2 grey--text title" > I couldn't find what wat you're looking for</h3>
+            <v-btn large class="primary" @click="$router.push('/timeline')">Browse products <v-icon right>shopping_cart</v-icon> </v-btn>
+          </div>
+          <v-list three-line v-else>
             <template class="ma-2" v-for="(item, index) in items" >
               <div class="ma-2" :key="item.title">
                 <v-subheader  v-if="item.header" :key="item.header">{{ item.header }}</v-subheader>
@@ -36,7 +41,7 @@
 
 <script>
 //  import mapboxgl from 'mapbox-gl'
-import { VTextField, VProgressCircular, VChip, VSubheader } from 'vuetify'
+import { VTextField, VProgressCircular, VChip, VSubheader, VIcon } from 'vuetify'
 import StarRating from 'vue-star-rating'
 export default {
   name: 'SearchResults',
@@ -49,19 +54,13 @@ export default {
       zoom: 19, // starting zoom
       minZoom: 8
     }) */
-    this.$http.post(`/products/search?q=${this.searchString}`)
-      .then(response => {
-        console.log(response)
-        this.items = response.data.product
-      })
-      .catch(error => {
-        console.log(error)
-      })
+    this.searchProducts(this.searchStringFromQuery)
   },
-  components: { VTextField, VProgressCircular, VChip, VSubheader, StarRating },
+  components: { VTextField, VProgressCircular, VChip, VSubheader, StarRating, VIcon },
   data: () => ({
     map: {},
     img: '',
+    searchString: '',
     product: {
       title: '',
       short_description: '',
@@ -91,10 +90,20 @@ export default {
     loading: false
   }),
   methods: {
-    getCurrentPosition () {}
+    getCurrentPosition () {},
+    searchProducts (searchString) {
+      this.$http.post(`/products/search?q=${searchString}`)
+        .then(response => {
+          console.log(response)
+          this.items = response.data.product
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    }
   },
   computed: {
-    searchString () {
+    searchStringFromQuery () {
       return this.$route.query.q
     }
   }
