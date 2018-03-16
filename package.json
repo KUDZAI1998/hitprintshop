@@ -13,6 +13,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "jsonwebtoken": "^8.2.0",
+    "mapbox-gl": "^0.44.1",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1",
     "vue-star-rating": "^1.5.1",

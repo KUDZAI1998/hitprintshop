@@ -7,8 +7,10 @@ import JoinUs from '@/pages/JoinUs'
 import Timeline from '@/pages/Timeline'
 import SellerProfile from '@/pages/SellerProfile'
 import ProductDetails from '@/pages/ProductDetails'
+import UploadProduct from '@/pages/UploadProduct'
 
 import {logout} from '@/utils/auth'
+
 Vue.use(Router)
 
 export default new Router({
@@ -29,6 +31,11 @@ export default new Router({
       beforeEnter: logout
     },
     {
+      path: '/account',
+      name: 'Account',
+      component: SellerProfile
+    },
+    {
       path: '/auth/jwt/callback',
       name: 'JwtCallback',
       component: JwtCallback
@@ -47,6 +54,11 @@ export default new Router({
       path: '/sellers/:username',
       name: 'SellerProfile',
       component: SellerProfile
+    },
+    {
+      path: '/products/new',
+      name: 'UploadProduct',
+      component: UploadProduct
     },
     {
       path: '/products/:productId',
