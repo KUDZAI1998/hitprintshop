@@ -8,6 +8,7 @@ import Timeline from '@/pages/Timeline'
 import SellerProfile from '@/pages/SellerProfile'
 import ProductDetails from '@/pages/ProductDetails'
 import UploadProduct from '@/pages/UploadProduct'
+import SearchResults from '@/pages/SearchResults'
 
 import {logout} from '@/utils/auth'
 
@@ -64,6 +65,11 @@ export default new Router({
       path: '/products/:productId',
       name: 'ProductDetails',
       component: ProductDetails
+    },
+    {
+      path: '/search',
+      name: 'SearchResults',
+      component: SearchResults
     }
   ]
 })

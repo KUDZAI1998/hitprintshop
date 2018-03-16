@@ -46,7 +46,8 @@ export default {
   /* Im thinking thhe background here should be a map with pounts of 
   * interests showing up.
   */
-  background-image: url(https://cdn.pixabay.com/photo/2017/05/10/20/29/ecommerce-2301933_960_720.jpg);
+  background-image: url(../assets/connect.jpg);
+  background-position: center;
   background-size: cover;
 }
 .text-center {
@@ -55,7 +56,7 @@ export default {
 
 .categories {
   margin: -150px auto 10px auto;
-  background: rgba(10, 10, 10, 0.363);
+  background: rgba(35, 102, 226, 0.363);
   width: 90%;
   height: 300px;
   left: 5%;
