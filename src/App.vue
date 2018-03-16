@@ -36,7 +36,7 @@
               <v-icon left>exit_to_app</v-icon>
               Logout
             </v-btn>
-            <v-btn @click="$router.push('/sellers/' + authUser.id)" class="" large block flat>
+            <v-btn @click="$router.push('/sellers/' + authUser.username)" class="" large block flat>
               <v-icon left>account_circle</v-icon>
               My Account
             </v-btn>
