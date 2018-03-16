@@ -5,9 +5,10 @@
         <v-icon class="media-block-icon white--text">fingerprint</v-icon>
         <h3 class="login-title">Login</h3>
       </div>
+      <v-progress-linear :indeterminate="true" v-if="loggingIn"></v-progress-linear>
       <v-container>
       
-        <v-btn block large class="white red--text mb-3 elevation-1">
+        <v-btn href="http://localhost:3000/v1/auth/google/g" @click="loggingIn = true" block large class="white red--text mb-3 elevation-1">
           <span class="mr-3 bolder">G</span> Login with google
         </v-btn>
 
@@ -26,7 +27,8 @@
 import {
   VCard,
   VIcon,
-  VTextField
+  VTextField,
+  VProgressLinear
 } from 'vuetify'
 
 export default {
@@ -34,8 +36,12 @@ export default {
   components: {
     VCard,
     VIcon,
-    VTextField
-  }
+    VTextField,
+    VProgressLinear
+  },
+  data: () => ({
+    loggingIn: false
+  })
 }
 </script>
 
