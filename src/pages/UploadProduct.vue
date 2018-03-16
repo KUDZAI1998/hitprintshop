@@ -36,14 +36,14 @@ import { getTokenObject, getUserProfile } from '@/utils/auth'
 export default {
   name: 'UploadProduct',
   mounted () {
-    /* mapboxgl.accessToken = 'pk.eyJ1Ijoia3VkYXBhcmEiLCJhIjoiY2plcGxmbTJpMm4xODJ3bWc1ZmN0czdjOSJ9.l4WED1JtSL5cef1d80zioQ'
+    mapboxgl.accessToken = 'pk.eyJ1Ijoia3VkYXBhcmEiLCJhIjoiY2plcGxmbTJpMm4xODJ3bWc1ZmN0czdjOSJ9.l4WED1JtSL5cef1d80zioQ'
     this.map = new mapboxgl.Map({
       container: 'map-view',
       style: 'mapbox://styles/mapbox/streets-v9',
       center: [31.0335, -17.8252], // [30.15, -18.13], // starting position
       zoom: 19, // starting zoom
       minZoom: 8
-    }) */
+    })
   },
   components: { VTextField, VProgressCircular },
   data: () => ({
@@ -72,7 +72,7 @@ export default {
         return !!(url.match(/\.(jpeg|jpg|gif|png)$/) != null) || 'Invalid image url.'
       }
     },
-    loading: true
+    loading: false
   }),
   methods: {
     getCurrentPosition () {
