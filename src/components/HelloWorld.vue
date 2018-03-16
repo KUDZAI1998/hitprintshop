@@ -1,35 +1,66 @@
 <template>
-  <v-container fluid>
-    <v-slide-y-transition mode="out-in">
-      <v-layout column align-center>
-        <img src="@/assets/logo.png" alt="Vuetify.js" class="mb-5">
-        <blockquote>
-          &#8220;First, solve the problem. Then, write the code.&#8221;
-          <footer>
-            <small>
-              <em>&mdash;John Johnson</em>
-            </small>
-          </footer>
-        </blockquote>
-      </v-layout>
-    </v-slide-y-transition>
-  </v-container>
+  <div fluid>
+      <div class="hero primary lighten-3">
+        <h3 class="text-center headline white--text">Find whatever you need, right here</h3>
+        <div>
+          <v-text-field
+            prepend-icon="search"
+            label="Search for goods and services"
+            solo
+            class="mx-3 my-3"
+            flat/>
+        </div>
+
+      </div>
+      <div class="categories text-center">
+          <h3 class="headline white--text mt-5">Promoted  products should coome here</h3>
+      </div>
+
+  </div>
 </template>
+
+<script>
+import {VTextField, VIcon} from 'vuetify'
+import * as VCard from 'vuetify/es5/components/VCard'
+
+export default {
+  components: {
+    VTextField,
+    VCard: VCard.VCard,
+    VCardTitle: VCard.VCardTitle,
+    VCardMedia: VCard.VCardMedia,
+    VCardActions: VCard.VCardActions,
+    VIcon
+  },
+  data: () => ({
+    colors: [ 'pink', 'green', 'purple', 'brown', 'blue', 'red', 'orange' ]
+  })
+}
+</script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h1, h2 {
-  font-weight: normal;
+.hero {
+  height: 400px;
+  padding: 100px 30px;
+  /* Im thinking thhe background here should be a map with pounts of 
+  * interests showing up.
+  */
+  background-image: url(https://cdn.pixabay.com/photo/2017/05/10/20/29/ecommerce-2301933_960_720.jpg);
+  background-size: cover;
 }
-ul {
-  list-style-type: none;
-  padding: 0;
+.text-center {
+  text-align: center
 }
-li {
-  display: inline-block;
-  margin: 0 10px;
+
+.categories {
+  margin: -150px auto 10px auto;
+  background: rgba(10, 10, 10, 0.363);
+  width: 90%;
+  height: 300px;
+  left: 5%;
+  padding: 20px;
+  z-index: 100000;
 }
-a {
-  color: #42b983;
-}
+
 </style>
