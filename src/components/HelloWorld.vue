@@ -7,6 +7,8 @@
             prepend-icon="search"
             label="Search for goods and services"
             solo
+            v-model="searchString"
+            @keyup.enter="$router.push(`/search?q=${searchString}`)"
             class="mx-3 my-3"
             flat/>
         </div>
@@ -33,7 +35,8 @@ export default {
     VIcon
   },
   data: () => ({
-    colors: [ 'pink', 'green', 'purple', 'brown', 'blue', 'red', 'orange' ]
+    colors: [ 'pink', 'green', 'purple', 'brown', 'blue', 'red', 'orange' ],
+    searchString: ''
   })
 }
 </script>
