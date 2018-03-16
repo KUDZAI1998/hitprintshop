@@ -4,6 +4,7 @@ import jwt from 'jsonwebtoken'
 import store from '@/store'
 import * as type from '@/store/mutation-types'
 
+const TOKEN_OBJECT_KEY = 'token_object'
 const ACCESS_TOKEN_KEY = 'access_token'
 const USER_PROFILE_KEY = 'user_profile'
 
@@ -18,6 +19,7 @@ export const login = ({ username, password, accountType }) => axios.post(
 export function logout (to, from, next) {
   clearAccessToken()
   clearUserProfile()
+  clearTokenObject()
   next({ path: '/' })
 }
 
@@ -48,6 +50,21 @@ function clearAccessToken () {
   store.commit(type.LOGOUT)
 }
 
+export function getTokenObject () {
+  return JSON.parse(localStorage.getItem(TOKEN_OBJECT_KEY))
+}
+
+// Get and store access_token in local storage
+export function setTokenObject (tokenObject) {
+  store.commit(type.LOGIN)
+  // let accessToken = getParameterByName('access_token')
+  localStorage.setItem(TOKEN_OBJECT_KEY, JSON.stringify(tokenObject))
+}
+
+function clearTokenObject () {
+  localStorage.removeItem(TOKEN_OBJECT_KEY)
+  store.commit(type.LOGOUT)
+}
 // Get and store access_token in local storage
 export function setUserProfile (user) {
   store.commit(type.SET_USER_PROFILE, user)
