@@ -1,36 +1,41 @@
 <template>
-  <v-container fluid grid-list-md class="layout-padding">
+  <v-container fluid grid-list-md class="layout-padding" >
     <v-layout row wrap>
-      <v-flex xs12 sm6 md4 xl3 v-for="i in 10" :key="i">
-        <v-card class="elevation-3 ma-3">
+      <v-flex xs12 sm6 md3 xl3 v-for="good in goods" :key="good.id">
+        <v-card class="elevation-1 zoom-on-hover">
           <v-card-media
             height="200px"
-            :src="goods[0].thumbnail_url()" alt="" class="media"> 
+            :src="good.thumbnail_url" alt="" class="media"> 
             <div class="media-title-tile">
-              <span class="media-title">{{goods[0].title}} </span>
-              <v-btn flat class="condition-chip white--text"> View Deal<v-icon>arrow_forward</v-icon></v-btn>
+             <v-btn
+               flat class="condition-chip white--text"> {{good.title}} <v-icon right>arrow_forward</v-icon></v-btn>
             </div>
           </v-card-media>
 
           <v-card-title>
             <div>
-              <h3 class="headline" style="font-weight: bold">${{goods[0].price}}</h3>
-              <star-rating v-model="goods[0].ratings" :star-size="16" text-class="white--text" class="ml-2" read-only/>
+              <h3 class="headline" style="font-weight: bold">${{good.price}}</h3>
+              <star-rating v-model="good.ratings" :star-size="16" text-class="white--text" class="ml-2" read-only/>
             </div>
             <v-spacer></v-spacer>
             <div>
-              <span>Posted by <a :href="`#/sellers/${goods[0].posted_by}`">{{ goods[0].posted_by }}</a></span>
+              <span>Posted by <a class="profile-link primary--text"  :href="`/sellers/${good.posted_by}`">{{ good.posted_by }}</a></span>
               <br>
               <span style="color: gray">3 days ago</span> <!-- install momentjs and format the date -->
             </div> 
           </v-card-title>
-          <p class="ml-3">
-          {{ goods[0].short_description}}
+          <p class="ma-3">
+          {{ good.short_description}}
           </p>
           
           <v-card-actions>
-            <v-btn small flat> <v-icon>favorite_border</v-icon> {{goods[0].likes_count | normalise}}</v-btn>
-            <v-btn small flat> <v-icon>comments</v-icon> {{ goods[0].comments.length }}</v-btn>
+            <v-layout row wrap style="padding: 5px">
+              <v-btn  flat>
+              <v-icon v-if="Math.random() > 0.5" class="red--text">favorite</v-icon>
+              <v-icon v-else>favorite_outline</v-icon> {{good.likes_count | normalise}}</v-btn>
+            <v-btn  flat> <v-icon>comments</v-icon> {{ good.comments.length }}</v-btn>
+            <v-btn v-if="isOwner"  flat class="grey lighten-4"> <v-icon left>edit</v-icon> edit </v-btn>
+            </v-layout>  
           </v-card-actions>
         </v-card>
       </v-flex>
@@ -59,9 +64,25 @@ export default {
     VChip,
     StarRating
   },
+  props: {
+    isOwner: {
+      type: Boolean,
+      default: false
+    }
+  },
+  mounted () {
+    this.$http.get('/products')
+      .then(response => {
+        this.goods = response.data
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  },
   data () {
     return {
-      goods: [
+      goods: []
+      /* goods: [
         {
           id: 1,
           title: 'Dell xps 13',
@@ -83,7 +104,7 @@ export default {
             }
           ]
         }
-      ]
+      ] */
     }
   },
   filters: {
@@ -110,6 +131,9 @@ export default {
   .layout-padding {
     padding: 40px;
   }
+  .zoom-on-hover:hover{
+    transform: scale(1, 1.01)
+  }
   /* show a background while the images are loadng */
   .media {
     background: #466368;
@@ -131,15 +155,20 @@ export default {
 
   .media-title {
     font-weight: bolder;
-    font-size: 20px;
+    font-size: 16px;
     color: snow;
     position: absolute;
     left: 15px;
+    bottom: 13px;
   }
 
   .condition-chip {
     position: absolute;
-    right: 0px;
+    left: 0px;
     bottom: 0px;
+  }
+
+  .profile-link {
+    text-decoration-line: none;
   }
 </style>
