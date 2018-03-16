@@ -10,10 +10,9 @@
             <template class="ma-2" v-for="(item, index) in items" >
               <div class="ma-2" :key="item.title">
                 <v-subheader  v-if="item.header" :key="item.header">{{ item.header }}</v-subheader>
-                <v-divider v-else-if="item.divider" :inset="item.inset" :key="index"></v-divider>
                 <v-list-tile avatar v-else :key="item.title" @click="">
                   <v-list-tile-avatar>
-                    <img :src="item.avatar">
+                    <img :src="item.thumbnail_url">
                   </v-list-tile-avatar>
                   <v-list-tile-content>
                     <v-list-tile-title >{{item.title}} <span class="circle-price blue darken-1">${{item.price}}</span></v-list-tile-title>
@@ -37,7 +36,7 @@
 
 <script>
 //  import mapboxgl from 'mapbox-gl'
-import { VTextField, VProgressCircular, VChip } from 'vuetify'
+import { VTextField, VProgressCircular, VChip, VSubheader } from 'vuetify'
 import StarRating from 'vue-star-rating'
 export default {
   name: 'SearchResults',
@@ -50,8 +49,16 @@ export default {
       zoom: 19, // starting zoom
       minZoom: 8
     }) */
+    this.$http.post(`/products/search?q=${this.searchString}`)
+      .then(response => {
+        console.log(response)
+        this.items = response.data.product
+      })
+      .catch(error => {
+        console.log(error)
+      })
   },
-  components: { VTextField, VProgressCircular, VChip, StarRating },
+  components: { VTextField, VProgressCircular, VChip, VSubheader, StarRating },
   data: () => ({
     map: {},
     img: '',
@@ -80,53 +87,16 @@ export default {
         )
       }
     },
-    items: [
-      { header: 'Results' },
-      {
-        avatar: '/static/doc-images/lists/1.jpg',
-        title: 'Brunch this weekend?',
-        short_description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
-        price: 20,
-        ratings: 5
-      },
-      { divider: true, inset: true },
-      {
-        avatar: '/static/doc-images/lists/2.jpg',
-        title: 'Summer BBQ',
-        short_description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
-        price: 45,
-        ratings: 3.5
-      },
-      { divider: true, inset: true },
-      {
-        avatar: '/static/doc-images/lists/3.jpg',
-        title: 'Oui oui',
-        short_description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
-        price: 24,
-        ratings: 2
-      },
-      { divider: true, inset: true },
-      {
-        avatar: '/static/doc-images/lists/4.jpg',
-        title: 'Birthday gift',
-        short_description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
-        price: 67,
-        ratings: 5
-
-      },
-      { divider: true, inset: true },
-      {
-        avatar: '/static/doc-images/lists/5.jpg',
-        title: 'Recipe to try',
-        short_description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
-        price: 23,
-        ratings: 1
-      }
-    ],
+    items: [],
     loading: false
   }),
   methods: {
     getCurrentPosition () {}
+  },
+  computed: {
+    searchString () {
+      return this.$route.query.q
+    }
   }
 }
 </script>
