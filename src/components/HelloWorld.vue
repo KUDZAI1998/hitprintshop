@@ -1,7 +1,7 @@
 <template>
   <div fluid>
       <div class="hero primary lighten-3">
-        <h3 class="text-center headline white--text">Find whatever you need, right here</h3>
+        <h3 class="text-center display-2 white--text">Find whatever you need, right here</h3>
         <div>
           <v-text-field
             prepend-icon="search"

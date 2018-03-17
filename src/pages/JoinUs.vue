@@ -1,39 +1,32 @@
 <template>
-  <div>
-    <v-card>
+  <v-app>
+    <v-content>
       <v-container>
-        <h3>Join as</h3>
-        <v-radio-group v-model="row" row style="width: 300px">
-          <v-radio label="Buyer" value="buyer" ></v-radio>
-          <v-radio label="Seller" value="seller"></v-radio>
-        </v-radio-group>
+        <v-layout align-center justify-center>
+          <v-flex xs12 sm8 md4>
+            <v-card class="elevation-5" style="border-top: #1976d2 2px solid">
+              <v-container class="padding">
+                <v-btn block large class="white red--text mb-3 elevation-3">
+                  <img class="rmargin" src="../assets/google.png" alt="google"> Join with google
+                </v-btn>
+                <v-btn block large class="white blue--text mb-3 elevation-3">
+                  <img class="rmargin" src="../assets/facebook.png" alt="google"> Join with facebook
+                </v-btn>
+                <hr>
+                <v-btn outline large block class="mt-3" @click="$router.push('/login')">Already Signed In? Log In</v-btn>
+              </v-container>
+            </v-card>
+          </v-flex>
+        </v-layout>
       </v-container>
-    </v-card>
-
-    <v-container>
-      <v-alert outline color="info" icon="info" :value="showAlert">
-        <p>
-        Now that you are joining us as a Seller you will have to visit our offices 
-        <code>   <v-icon>location_on</v-icon> Hostel 3 Room 115 </code>      
-        for your account to be approved.
-        </p>
-        <p>Be sure to bring your school and national ID</p>
-      </v-alert>
-
-      <v-btn large class="blue white--text">
-      <span class="bolder mr-3">F</span> Join with facebook
-    </v-btn>
-
-    <v-btn large class="red white--text">
-      <span class="bolder mr-3">G</span> Join with google
-    </v-btn>
-    </v-container>
-  </div>
+    </v-content>
+  </v-app>
 </template>
 
 <script>
 import {
   VCard,
+  VIcon,
   VAlert
 } from 'vuetify'
 
@@ -45,7 +38,8 @@ export default {
     VCard,
     VRadioGroup: VRadioGroup.VRadioGroup,
     VRadio: VRadioGroup.VRadio,
-    VAlert
+    VAlert,
+    VIcon
   },
   data: () => ({
     row: 'buyer'
@@ -67,5 +61,16 @@ export default {
     border-radius: 50%;
     border: #fff 2px solid;
     font-weight: bolder
+  }
+  .login-card {
+    margin: 60px auto;
+    max-width: 400px;
+  }
+  .rmargin{
+    margin-right: 4px
+  }
+  .padding{
+    padding-top: 50px;
+    padding-bottom: 50px;
   }
 </style>
