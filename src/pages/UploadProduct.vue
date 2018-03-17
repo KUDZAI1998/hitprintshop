@@ -21,7 +21,11 @@
       </v-flex>
       <v-flex xs12 sm8 style="height: 800px;" >
         <div class="box" id="map-view">
-          <v-btn class="white primary--text map-btn" @click="getCurrentPosition"><v-icon left>my_location</v-icon> Get my current location</v-btn>
+          <v-card class="white elevation-1 pa-2" style="border-radius: 3px; position: absolute; top: 10px; left: 10px; z-index: 20">
+            <v-card-title class="green--text" v-if="product.location.longitude"> <v-icon class="green--text" left>check_circle</v-icon> You have chosen a location</v-card-title>
+            <v-card-title class="orange--text" v-else>No location chosen</v-card-title>
+            <v-card-actions><v-btn class="white primary--text" @click="getCurrentPosition"><v-icon left>my_location</v-icon> Get my current location</v-btn></v-card-actions>
+          </v-card>
         </div>
       </v-flex>
     </v-layout>
@@ -32,6 +36,8 @@
 import mapboxgl from 'mapbox-gl'
 import { VTextField, VProgressCircular } from 'vuetify'
 import { getTokenObject, getUserProfile } from '@/utils/auth'
+
+import * as VCard from 'vuetify/es5/components/VCard'
 
 export default {
   name: 'UploadProduct',
@@ -48,7 +54,14 @@ export default {
     // Add zoom and rotation controls to the map.
     this.map.addControl(new mapboxgl.NavigationControl())
   },
-  components: { VTextField, VProgressCircular },
+  components: {
+    VTextField,
+    VProgressCircular,
+    VCard: VCard.VCard,
+    VCardTitle: VCard.VCardTitle,
+    VCardMedia: VCard.VCardMedia,
+    VCardActions: VCard.VCardActions
+  },
   data: () => ({
     map: {},
     img: '',
@@ -82,8 +95,8 @@ export default {
       if (navigator.geolocation) {
         const self = this
         navigator.geolocation.getCurrentPosition(function (position) {
-          self.product.location.longitude = position.coords.longitude
-          self.product.location.latitude = position.coords.latitude
+          self.$set(self.product.location, 'longitude', position.coords.longitude)
+          self.$set(self.product.location, 'latitude', position.coords.latitude)
 
           const coordinates = [
             position.coords.longitude,
@@ -122,10 +135,26 @@ export default {
         console.log('success')
         console.log(response)
         this.loading = false
+        this.clearFields()
       }).catch(error => {
         console.log('error', JSON.stringify(error))
         this.loading = false
       })
+    },
+    clearFields () {
+      this.product = {
+        title: '',
+        short_description: '',
+        price: 0,
+        thumbnail_url: '',
+        available: true,
+        condition: 'new',
+        posted_on: '',
+        category: 'technology',
+        posted_by: '',
+        location: {},
+        comments: []
+      }
     }
   }
 }
