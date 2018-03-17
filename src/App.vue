@@ -19,7 +19,7 @@
   </v-navigation-drawer>
     <v-toolbar class="elevation-1 primary" dark app>
       <v-toolbar-title>
-      <v-btn flat @click="drawer = !drawer"  > <v-icon>menu</v-icon></v-btn>
+      <v-btn flat fab @click="drawer = !drawer"  > <v-icon>menu</v-icon></v-btn>
       <v-btn flat @click="$router.push('/timeline')"> <v-icon v-for="i in 3" :key="i">attach_money</v-icon></v-btn>
       </v-toolbar-title>
       <v-spacer></v-spacer>
@@ -50,6 +50,9 @@
       <v-btn v-if="!isLoggedIn" large flat @click="$router.push('/login')"> login </v-btn>
     </v-toolbar>
     <v-content>
+      <div style="width: 100%; height: 30px; background: orange; text-align: center; color: white; padding: 5px;">
+        Please note that this is a beta version. You are invited to give us your <a href="">feedback</a>
+      </div>
       <router-view/>
     </v-content>
     <v-footer>
