@@ -21,7 +21,7 @@
       </v-flex>
       <v-flex xs12 sm8 style="height: 800px;" >
         <div class="box" id="map-view">
-          <v-btn outline class="primary primary--text map-btn" @click="getCurrentPosition"><v-icon left>my_location</v-icon> Get my current location</v-btn>
+          <v-btn class="white primary--text map-btn" @click="getCurrentPosition"><v-icon left>my_location</v-icon> Get my current location</v-btn>
         </div>
       </v-flex>
     </v-layout>
@@ -41,9 +41,12 @@ export default {
       container: 'map-view',
       style: 'mapbox://styles/mapbox/streets-v9',
       center: [31.0335, -17.8252], // [30.15, -18.13], // starting position
-      zoom: 19, // starting zoom
+      zoom: 12, // starting zoom
       minZoom: 8
     })
+
+    // Add zoom and rotation controls to the map.
+    this.map.addControl(new mapboxgl.NavigationControl())
   },
   components: { VTextField, VProgressCircular },
   data: () => ({
@@ -87,7 +90,8 @@ export default {
             position.coords.latitude
           ]
           self.map.flyTo({
-            center: coordinates
+            center: coordinates,
+            zoom: 19
           })
 
           // create a HTML element for each feature
