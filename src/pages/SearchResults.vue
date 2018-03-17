@@ -31,7 +31,7 @@
       </v-flex>
       <v-flex xs12 sm8 style="height: 800px;" >
         <div class="box" id="map-view">
-          <v-btn outline class="primary primary--text map-btn" @click="getCurrentPosition"><v-icon left>my_location</v-icon> Get my current location</v-btn>
+          <!--<v-btn class="white primary--text map-btn" @click="getCurrentPosition"><v-icon left>my_location</v-icon> Get my current location</v-btn>-->
         </div>
       </v-flex>
     </v-layout>
@@ -40,20 +40,24 @@
 </template>
 
 <script>
-//  import mapboxgl from 'mapbox-gl'
+import mapboxgl from 'mapbox-gl'
 import { VTextField, VProgressCircular, VChip, VSubheader, VIcon } from 'vuetify'
 import StarRating from 'vue-star-rating'
 export default {
   name: 'SearchResults',
   mounted () {
-    /* mapboxgl.accessToken = 'pk.eyJ1Ijoia3VkYXBhcmEiLCJhIjoiY2plcGxmbTJpMm4xODJ3bWc1ZmN0czdjOSJ9.l4WED1JtSL5cef1d80zioQ'
+    mapboxgl.accessToken = 'pk.eyJ1Ijoia3VkYXBhcmEiLCJhIjoiY2plcGxmbTJpMm4xODJ3bWc1ZmN0czdjOSJ9.l4WED1JtSL5cef1d80zioQ'
     this.map = new mapboxgl.Map({
       container: 'map-view',
       style: 'mapbox://styles/mapbox/streets-v9',
       center: [31.0335, -17.8252], // [30.15, -18.13], // starting position
       zoom: 19, // starting zoom
       minZoom: 8
-    }) */
+    })
+    // Add zoom and rotation controls to the map.
+    this.map.addControl(new mapboxgl.NavigationControl())
+
+    this.searchString = this.searchStringFromQuery
     this.searchProducts(this.searchStringFromQuery)
   },
   components: { VTextField, VProgressCircular, VChip, VSubheader, StarRating, VIcon },
@@ -96,10 +100,45 @@ export default {
         .then(response => {
           console.log(response)
           this.items = response.data.product
+          this.populateMapWithResults(response.data.product)
         })
         .catch(error => {
           console.log(error)
         })
+    },
+    populateMapWithResults (searchResults) {
+      // remove any existing markers
+      for (let i = 0; i < searchResults.length; i++) {
+        if (searchResults[i].location) {
+          const coordinates = [
+            searchResults[i].location.longitude,
+            searchResults[i].location.latitude
+          ]
+
+          // create a HTML element for each feature
+          var div = document.createElement('div')
+          var icon = document.createElement('i')
+          icon.className = 'material-icons white--text marker-icon'
+          icon.innerHTML = 'location_on'
+          div.className = 'marker'
+          div.appendChild(icon)
+          new mapboxgl.Marker(div)
+            .setLngLat(coordinates)
+            .addTo(this.map)
+        }
+      }
+
+      // then fly to the location of the first results
+      if (searchResults.length) {
+        if (searchResults[0].location) {
+          this.map.flyTo({
+            center: [
+              searchResults[0].location.longitude,
+              searchResults[0].location.latitude
+            ]
+          })
+        }
+      }
     }
   },
   computed: {
