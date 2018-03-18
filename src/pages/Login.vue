@@ -8,12 +8,12 @@
       <v-progress-linear :indeterminate="true" v-if="loggingIn"></v-progress-linear>
       <v-container>
       
-        <v-btn href="http://localhost:3000/v1/auth/google/g" @click="loggingIn = true" block large class="white red--text mb-3 elevation-1">
-          <span class="mr-3 bolder">G</span> Login with google
+        <v-btn block large class="white red--text mb-3 elevation-3">
+          <img class="rmargin" src="../assets/google.png" alt="google"> Login with google
         </v-btn>
 
-        <v-btn block large class="white blue--text mb-3 elevation-1">
-          <span class="mr-3 bolder">F</span> Login with facebook
+        <v-btn block large class="white blue--text mb-3 elevation-3">
+          <img class="rmargin" src="../assets/facebook.png" alt="google"> Login with facebook
         </v-btn>
 
         <hr>
@@ -70,6 +70,10 @@ export default {
     position: absolute;
     bottom: 0px;
     left: 45%
+  }
+  
+   .rmargin{
+    margin-right: 4px
   }
 
   .bolder {
