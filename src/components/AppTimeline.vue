@@ -19,7 +19,7 @@
             </div>
             <v-spacer></v-spacer>
             <div>
-              <span>Posted by <a class="profile-link primary--text"  :href="`/sellers/${good.posted_by}`">{{ good.posted_by }}</a></span>
+              <span>Posted by <a class="profile-link primary--text"  @click="$router.push(`/sellers/${good.posted_by}`)">{{ good.posted_by }}</a></span>
               <br>
               <span style="color: gray">3 days ago</span> <!-- install momentjs and format the date -->
             </div> 
