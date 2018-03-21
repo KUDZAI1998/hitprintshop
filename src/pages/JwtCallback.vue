@@ -35,7 +35,7 @@ export default {
     }
   },
   mounted () {
-    this.$http.post('http://localhost:3000/v1/auth/jwt', {
+    this.$http.post('/auth/jwt', {
       shortLivedToken: this.$route.query.shortLivedToken
     }).then(response => {
       this.attemptedAuthentication = true
