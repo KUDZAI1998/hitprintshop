@@ -117,13 +117,39 @@ export default {
 
           // create a HTML element for each feature
           var div = document.createElement('div')
-          var icon = document.createElement('i')
-          icon.className = 'material-icons white--text marker-icon'
-          icon.innerHTML = 'location_on'
+          div.style.backgroundImage = `url(${searchResults[i].thumbnail_url})`
+          div.style.backgroundPosition = 'center'
+          div.style.backgroundSize = 'cover'
           div.className = 'marker'
-          div.appendChild(icon)
+
+          /** TODO
+           * to sho alert or popup whn cliked
+          el.addEventListener('click', function() {
+              window.alert(marker.properties.message);
+          }); */
+          // create the popup
+          var popup = new mapboxgl.Popup()
+            .setHTML(`
+              <div class="container">
+                <h3 class="title">
+                  <span class="circle-price blue darken-1">$${searchResults[i].price}</span>
+                  ${searchResults[i].title}
+                </h3>
+                <p class="mt-3 mb-3">
+                   ${searchResults[i].short_description}
+                <p>
+                <img src="${searchResults[i].thumbnail_url}" height="200px">
+                <br>
+                <br>
+                <a href="#/products/${searchResults[i]._id}" class="btn btn--block elevation-1 primary white--text">
+                View Deal
+                <i class="material-icons">arrow_forward</i>
+                </a>
+              </div>
+            `)
           new mapboxgl.Marker(div)
             .setLngLat(coordinates)
+            .setPopup(popup) // sets a popup on this marker
             .addTo(this.map)
         }
       }
@@ -144,6 +170,12 @@ export default {
   computed: {
     searchStringFromQuery () {
       return this.$route.query.q
+    }
+  },
+  watch: {
+    searchStringFromQuery (value) {
+      this.searchString = value
+      this.searchProducts(value)
     }
   }
 }
@@ -184,6 +216,16 @@ export default {
   left: 10px;
 }
 
+.mapboxgl-popup-close-button {
+  font-size: 25px;
+  height: 30px;
+  width: 30px;
+  top: 5px;
+  right: 5px;
+  color: orange;
+  border: orange 1px solid;
+  border-radius: 50%;
+}
 .circle-price {
   width: 60px;
   height: 60px;
