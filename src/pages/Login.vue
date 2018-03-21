@@ -7,8 +7,7 @@
       </div>
       <v-progress-linear :indeterminate="true" v-if="loggingIn"></v-progress-linear>
       <v-container>
-      
-        <v-btn href="http://localhost:3000/v1/auth/google/g" @click="loggingIn = true" block large class="white red--text mb-3 elevation-1">
+        <v-btn :href="`${baseURL}/auth/google/g`" @click="loggingIn = true" block large class="white red--text mb-3 elevation-1">
           <span class="mr-3 bolder">G</span> Login with google
         </v-btn>
 
@@ -30,6 +29,7 @@ import {
   VTextField,
   VProgressLinear
 } from 'vuetify'
+import { baseURL } from '@/utils/axios'
 
 export default {
   name: 'Login',
@@ -40,7 +40,8 @@ export default {
     VProgressLinear
   },
   data: () => ({
-    loggingIn: false
+    loggingIn: false,
+    baseURL
   })
 }
 </script>
