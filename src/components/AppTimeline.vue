@@ -1,7 +1,7 @@
 <template>
   <v-container fluid grid-list-md class="layout-padding" >
     <v-layout row wrap>
-      <v-flex xs12 sm6 md3 xl3 v-for="good in goods" :key="good.id">
+      <v-flex xs12 sm6 md3 xl3 v-for="good in products" :key="good.id">
         <v-card class="elevation-1 zoom-on-hover">
           <v-card-media
             height="200px"
@@ -68,16 +68,10 @@ export default {
     isOwner: {
       type: Boolean,
       default: false
+    },
+    products: {
+      type: Array
     }
-  },
-  mounted () {
-    this.$http.get('/products')
-      .then(response => {
-        this.goods = response.data
-      })
-      .catch(err => {
-        console.log(err)
-      })
   },
   data () {
     return {
