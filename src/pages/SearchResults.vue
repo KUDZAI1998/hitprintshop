@@ -12,7 +12,7 @@
             <v-btn large class="primary" @click="$router.push('/timeline')">Browse products <v-icon right>shopping_cart</v-icon> </v-btn>
           </div>
           <v-list three-line v-else>
-            <template class="ma-2" v-for="(item, index) in items" >
+            <template class="ma-2" v-for="item in items" >
               <div class="ma-2" :key="item.title">
                 <v-subheader  v-if="item.header" :key="item.header">{{ item.header }}</v-subheader>
                 <v-list-tile avatar v-else :key="item.title" @click="$router.push(`/products/${item._id}`)">
