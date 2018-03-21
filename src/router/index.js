@@ -6,6 +6,7 @@ import JwtCallback from '@/pages/JwtCallback'
 import JoinUs from '@/pages/JoinUs'
 import Timeline from '@/pages/Timeline'
 import SellerProfile from '@/pages/SellerProfile'
+import MyProducts from '@/pages/MyProducts'
 import ProductDetails from '@/pages/ProductDetails'
 import UploadProduct from '@/pages/UploadProduct'
 import SearchResults from '@/pages/SearchResults'
@@ -36,6 +37,12 @@ export default new Router({
       path: '/account',
       name: 'Account',
       component: SellerProfile
+    },
+    {
+      path: '/account/products',
+      name: 'MyProducts',
+      component: MyProducts,
+      beforeEnter: authenticate
     },
     {
       path: '/auth/jwt/callback',
