@@ -94,30 +94,46 @@ export default {
     getCurrentPosition () {
       if (navigator.geolocation) {
         const self = this
-        navigator.geolocation.getCurrentPosition(function (position) {
-          self.$set(self.product.location, 'longitude', position.coords.longitude)
-          self.$set(self.product.location, 'latitude', position.coords.latitude)
+        navigator.geolocation.getCurrentPosition(
+          // Success callback
+          function (position) {
+            console.log(position)
+            self.$set(self.product.location, 'longitude', position.coords.longitude)
+            self.$set(self.product.location, 'latitude', position.coords.latitude)
 
-          const coordinates = [
-            position.coords.longitude,
-            position.coords.latitude
-          ]
-          self.map.flyTo({
-            center: coordinates,
-            zoom: 19
-          })
+            const coordinates = [
+              position.coords.longitude,
+              position.coords.latitude
+            ]
+            self.map.flyTo({
+              center: coordinates,
+              zoom: 19
+            })
 
-          // create a HTML element for each feature
-          var div = document.createElement('div')
-          var icon = document.createElement('i')
-          icon.className = 'material-icons white--text marker-icon'
-          icon.innerHTML = 'location_on'
-          div.className = 'marker'
-          div.appendChild(icon)
-          new mapboxgl.Marker(div)
-            .setLngLat(coordinates)
-            .addTo(self.map)
-        })
+            // create a HTML element for each feature
+            var div = document.createElement('div')
+            var icon = document.createElement('i')
+            icon.className = 'material-icons white--text marker-icon'
+            icon.innerHTML = 'location_on'
+            div.className = 'marker'
+            div.appendChild(icon)
+            new mapboxgl.Marker(div)
+              .setLngLat(coordinates)
+              .addTo(self.map)
+          },
+
+          // Error callback
+          function (error) {
+            // deal with the error here
+            console.log(error)
+          },
+
+          // Options
+          {
+            enableHighAccuracy: true,
+            maximumAge: 0
+          }
+        )
       }
     },
     uploadProduct () {
