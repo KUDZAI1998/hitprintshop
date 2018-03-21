@@ -5,7 +5,7 @@
         <v-flex xs12 sm4>
 
           <!-- seller's short bio -->
-          <v-card class="ma-2">
+          <v-card class="ma-2 border-top-primary">
             <v-card-title class="">
               <h3>Posted by</h3>
             </v-card-title>
@@ -29,12 +29,17 @@
           </v-card> <!-- Seller's profile -->
 
           <!-- the pictures -->
-          <v-card class="ma-2"  color="purple">
+          <v-card class="ma-2 border-top-primary">
+            <v-card-title class="headline primary--text">${{ productData.price }}</v-card-title>
+          </v-card> <!-- the pictures -->
+
+          <!-- the pictures -->
+          <v-card class="ma-2">
             <v-card-media height="300px" :src="productData.thumbnail_url"></v-card-media>
           </v-card> <!-- the pictures -->
 
           <!-- map part -->
-          <v-card class="ma-2">
+          <v-card class="ma-2 border-top-primary">
             <v-card-title>
               <v-icon>location_on</v-icon> 123 Magamba road
             </v-card-title>
@@ -48,7 +53,7 @@
 
         <v-flex xs12 sm8>
           <!-- descriptions and ratings -->
-          <v-card class="ma-2">
+          <v-card class="ma-2 border-top-primary">
             <v-card-title>
               <h3>{{ productData.title }}</h3>
             </v-card-title>
@@ -141,6 +146,9 @@ export default {
 </script>
 
 <style scoped>
+  .border-top-primary {
+    border-top: 1px #1976d2 solid;
+  }
   .chat-area {
     width: 100%;
     padding: 10px;
