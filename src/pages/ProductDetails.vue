@@ -67,18 +67,17 @@
             </v-card-actions>
           </v-card> <!-- descriptions and rating -->
 
-          <v-card class="ma-2">
+          <v-card class="ma-2">          
             <v-card-title class="primary" dark>
               <v-text-field
-                prepend-icon="comment"
-                append-icon="send"
-                label="Comment"
+                label="Type in your comment"
                 solo
                 class="mx-3 black--text"
                 multi-line
                 flat/>
+                <v-btn outline color="white" class="white--text">send <v-icon right>send</v-icon>  </v-btn>
             </v-card-title>
-            <div class="chat-area" v-for="n in 10" :key="n">
+            <div class="chat-area" v-for="n in 5" :key="n">
               <div class="chat-item">
                 <v-layout class="">
                   <v-flex xs2 sm1>
@@ -88,7 +87,7 @@
 
                   <v-flex xs10 sm11>
                     <div class="chat-item-main">
-                      <h3>@kay_p
+                      <h3> <a @click="$router.push('/sellers/kudapara')">@kudapara</a>
                         <span style="color: gray; font-size: 10px;">2 days ago</span>
                       </h3>
                       <div class="chat-item-main-message">
