@@ -1,6 +1,6 @@
 <template>
   <div>
-    <app-timeline></app-timeline>
+    <app-timeline :products="productsData"></app-timeline>
   </div>
 </template>
 
@@ -11,6 +11,20 @@ export default {
   name: 'Timeline',
   components: {
     AppTimeline
-  }
+  },
+  mounted () {
+    console.log('mounted')
+    this.$http.get('/products')
+      .then(response => {
+        this.productsData = response.data
+        console.log(response.data)
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  },
+  data: () => ({
+    productsData: []
+  })
 }
 </script>

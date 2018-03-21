@@ -59,7 +59,7 @@
 
       <v-tabs-items v-model="tabs" class="mt-3">
         <v-tab-item id="products">
-          <app-timeline :isOwner="isOwner"></app-timeline>
+          <app-timeline :isOwner="isOwner" :products="productsData"></app-timeline>
         </v-tab-item>
 
         <v-tab-item id="followers">
@@ -110,10 +110,18 @@ export default {
     }).then(response => {
       this.userData = response.data
     }).catch(console.log)
+
+    this.$http.get(`products?posted_by=${this.$route.params.username}`)
+      .then(response => {
+        console.log('products data')
+        console.log(response.data)
+        this.productsData = response.data
+      }).catch(console.log)
   },
   data: () => ({
     tabs: '',
-    userData: null
+    userData: null,
+    productsData: []
   }),
   computed: {
     ...mapGetters(['authUser']),
