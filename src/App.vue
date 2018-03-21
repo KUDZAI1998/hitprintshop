@@ -29,7 +29,7 @@
       <v-menu bottom offset-y offset-y2 v-if="isLoggedIn">
         <v-btn slot="activator" flat>
           <v-icon  class="avatar" v-if="!authUser.picture">person</v-icon>
-          <img v-else  class="avatar" :src="authUser.picture" :alt="authUser.name" srcset="">
+          <img v-else  class="avatar" :src="authUser.picture" :alt="authUser.username" srcset="">
         </v-btn>
         <v-list>
             <v-btn @click="$router.push('/logout')" class="" large block flat>
