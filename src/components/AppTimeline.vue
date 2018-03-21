@@ -8,7 +8,7 @@
             :src="good.thumbnail_url" alt="" class="media"> 
             <div class="media-title-tile">
              <v-btn
-               flat class="condition-chip white--text"> {{good.title}} <v-icon right>arrow_forward</v-icon></v-btn>
+               flat class="condition-chip white--text" @click="$router.push(`/products/${good.id}`)"> {{good.title}} <v-icon right>arrow_forward</v-icon></v-btn>
             </div>
           </v-card-media>
 
