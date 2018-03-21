@@ -3,7 +3,14 @@
     
     <v-navigation-drawer    v-model="drawer" app class="elevation-1">
     <div style="width: 100%; height: 200px;" class="primary white--text pa-3">
-      <p>Profile info comes here</p>
+      <h3 class="title mb-2">HIT Connect</h3>
+      <v-text-field
+        append-icon="search"
+        label="Search for goods and services"
+        solo
+        v-model="searchString"
+        @keyup.enter="$router.push(`/search?q=${searchString}`)"
+        flat/>
     </div>
     <v-list class="pt-0" dense>
       <hr>
@@ -101,7 +108,8 @@ export default {
       right: true,
       rightDrawer: false,
       title: 'Hit-Connect',
-      mini: true
+      mini: true,
+      searchString: ''
     }
   },
   name: 'App',
