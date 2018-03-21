@@ -11,6 +11,7 @@ import UploadProduct from '@/pages/UploadProduct'
 import SearchResults from '@/pages/SearchResults'
 
 import {logout} from '@/utils/auth'
+import { authenticate } from '@/router/guards'
 
 Vue.use(Router)
 
@@ -59,7 +60,8 @@ export default new Router({
     {
       path: '/products/new',
       name: 'UploadProduct',
-      component: UploadProduct
+      component: UploadProduct,
+      beforeEnter: authenticate
     },
     {
       path: '/products/:productId',
