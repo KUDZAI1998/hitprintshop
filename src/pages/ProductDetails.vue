@@ -11,13 +11,13 @@
             </v-card-title>
             <v-list two-line style="width: 100%">
               <template>
-                <v-list-tile avatar  @click="">
+                <v-list-tile avatar  @click="$router.push(`/sellers/${productData.posted_by}`)">
                   <v-list-tile-avatar>
                     <v-icon class="primary--text" size="40px">perm_identity</v-icon>
                   </v-list-tile-avatar>
                   <v-list-tile-content>
-                    <v-list-tile-title>@kay_p</v-list-tile-title>
-                    <v-list-tile-sub-title>Kudakwashe Paradzayi</v-list-tile-sub-title>
+                    <v-list-tile-title class="primary--text">@{{productData.posted_by}}</v-list-tile-title>
+                    <!--<v-list-tile-sub-title>Kudakwashe Paradzayi</v-list-tile-sub-title>-->
                   </v-list-tile-content>
                 </v-list-tile>
               </template>
@@ -30,7 +30,7 @@
 
           <!-- the pictures -->
           <v-card class="ma-2"  color="purple">
-            <v-card-media height="300px" :src="`https://unsplash.it/150/300?image=${Math.floor(Math.random() * 100) + 1}`"></v-card-media>
+            <v-card-media height="300px" :src="productData.thumbnail_url"></v-card-media>
           </v-card> <!-- the pictures -->
 
           <!-- map part -->
@@ -50,15 +50,15 @@
           <!-- descriptions and ratings -->
           <v-card class="ma-2">
             <v-card-title>
-              <h3>Dell XPS</h3>
+              <h3>{{ productData.title }}</h3>
             </v-card-title>
             <p class="ml-3">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore, repellat! Voluptate, molestias. Dignissimos distinctio accusantium non, in odio nemo suscipit vel magni incidunt atque voluptas eius commodi enim sunt possimus.
+              {{ productData.short_description }}
             </p>
             <hr>
             <v-card-actions>
-              <v-btn flat> <v-icon>favorite</v-icon> 3K</v-btn>
-              <span><star-rating v-model="ratings" :star-size="16" inline text-class="white--text" class="ml-2" read-only/></span>
+              <v-btn flat> <v-icon>favorite</v-icon>{{ productData.likes_count }}</v-btn>
+              <span><star-rating v-model="productData.ratings" :star-size="16" inline text-class="white--text" class="ml-2" read-only/></span>
             </v-card-actions>
           </v-card> <!-- descriptions and rating -->
 
@@ -126,8 +126,16 @@ export default {
     VChip,
     StarRating
   },
+  mounted () {
+    // const authHeader = `${getTokenObject().tokenType} ${getTokenObject().accessToken}`
+    this.$http.get(`/products/${this.$route.params.productId}`).then(response => {
+      this.productData = response.data.product
+      console.log(response.data.product)
+    }).catch(console.log)
+  },
   data: () => ({
-    ratings: 3.5
+    ratings: 3.5,
+    productData: {}
   })
 }
 </script>
