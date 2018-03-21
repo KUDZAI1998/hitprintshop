@@ -9,8 +9,8 @@
       <!-- use usernames in the future -->
         <v-icon v-if="!userData.picture" class="avatar mt-3" color="white">perm_identity</v-icon>
         <img v-else class="avatar mt-3" :src="userData.picture" alt="">
-        <v-btn class="primary text--white mt-3 pr-3 pl-4" v-if="isOwner">Settings</v-btn>
-        <v-btn class="primary text--white mt-3 pr-3 pl-4" v-else>Follow</v-btn>
+        <v-btn class="white primary--text mt-3 pr-3 pl-4" v-if="isOwner"><v-icon left>settings</v-icon> Settings</v-btn>
+        <v-btn class="white primary--white mt-3 pr-3 pl-4" v-else> <v-icon>directions_walk</v-icon> Follow</v-btn>
         <h3 class="profile-username">@{{ userData.username }}</h3>
         <h5 class="profile-name">{{ userData.name }}</h5>
       </div>
@@ -131,6 +131,9 @@ export default {
     background: -moz-linear-gradient(#648880, #293f50);
     background: -o-linear-gradient(#648880, #293f50);
     background: linear-gradient(#648880, #293f50);
+    background-image: url(https://cdn.pixabay.com/photo/2016/10/11/21/43/banner-1732847_960_720.jpg);
+    background-position: center;
+    background-size: cover;
     height: 350px;
     padding: 30px 0 0 0;
     position: relative;
