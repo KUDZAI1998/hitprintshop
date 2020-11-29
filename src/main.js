@@ -5,33 +5,6 @@ import App from './App'
 import router from './router'
 import store from './store'
 import axios from '@/utils/axios'
-import {
-  Vuetify,
-  VApp,
-  VNavigationDrawer,
-  VFooter,
-  VList,
-  VBtn,
-  VIcon,
-  VGrid,
-  VToolbar,
-  transitions
-} from 'vuetify'
-import '../node_modules/vuetify/src/stylus/app.styl'
-
-Vue.use(Vuetify, {
-  components: {
-    VApp,
-    VNavigationDrawer,
-    VFooter,
-    VList,
-    VBtn,
-    VIcon,
-    VGrid,
-    VToolbar,
-    transitions
-  }
-})
 
 Vue.config.productionTip = false
 Vue.prototype.$http = axios

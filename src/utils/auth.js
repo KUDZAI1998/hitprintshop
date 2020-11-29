@@ -8,19 +8,18 @@ const TOKEN_OBJECT_KEY = 'token_object'
 const ACCESS_TOKEN_KEY = 'access_token'
 const USER_PROFILE_KEY = 'user_profile'
 
-export const login = ({ username, password, accountType }) => axios.post(
-  '/auth/signin', {
-    username,
-    password,
-    accountType
+export const login = ({ regNumber, password }) => axios.post(
+  '/login', {
+    regNumber,
+    password
   }
 )
 
-export function logout (to, from, next) {
+export function logout () {
   clearAccessToken()
   clearUserProfile()
   clearTokenObject()
-  next({ path: '/' })
+  window.location.reload()
 }
 
 export function requireAuth (to, from, next) {

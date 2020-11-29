@@ -1,0 +1,76 @@
+<template>
+<div class="container-fluid body">
+  <div class="col-md-12 d-flex align-items-center justify-content-center" id="main_column">
+    <div class="card border-0" id="login_card">
+      <div class="card-header">
+        <h4 class="card-title text-primary font-weight-bold" data-toggle="tooltip" title="Developed By Ngonidzashe Mangudya"><span id="brand_span">hit</span>printshop</h4>
+        <h6 class="card-subtitle"><small>Log into your account <span><a href="/signup">or register</a></span> or <span class="text-primary" data-toggle="modal" data-target="#forgotPasswordModal">you forgot your password?</span></small></h6>
+      </div>
+      <div class="card-body">
+        <div class="row p-1">
+          <div class="col-md-12">
+            <input v-model="regNumber" type="text" class="form-control border-0 shadow-lg" name="regNumber" id="reg_number" placeholder="HIT Registration Number" required>
+          </div>
+        </div>
+        <div class="row p-1">
+          <div class="col-md-12">
+            <input v-model="password" type="password" class="form-control border-0 shadow-lg" name="password" id="password" placeholder="Password" required>
+          </div>
+        </div>
+        <div class="row p-1">
+          <div class="col-md-12">
+            <input type="submit" @click="login()" class="form-control border-0 shadow-lg btn btn-primary" value="Log In" id="login_button">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</template>
+
+<script>
+import axios from 'axios'
+import { setAccessToken } from '../../utils/auth'
+import { authenticate } from '../../router/guards'
+export default {
+  data () {
+    return {
+      regNumber: '',
+      password: ''
+    }
+  },
+  methods: {
+    async login () {
+      event.preventDefault()
+      let btn = document.getElementById('login_button')
+      btn.value = 'Processing'
+      let response = await axios.post('https://hitprintshop.herokuapp.com/signin', {
+        regNumber: this.regNumber, password: this.password
+      }).catch(function (error) {
+        btn.value = 'Log In'
+        window.alert(error.response.data.message)
+      })
+      console.log(response)
+      btn.value = 'Log In'
+      if (response.data.status === 200) {
+        window.alert('Successful')
+        setAccessToken(response.data.token)
+        setTimeout(function () {
+          this.isLoggedIn = authenticate()
+          window.location.reload()
+        }, 1500)
+      } else if (response.status === 404) {
+        window.alert('Student ID not registered')
+      } else if (response.status === 403) {
+        window.alert('Incorrect password')
+      } else {
+        window.alert('Unexpected error')
+      }
+    }
+  }
+}
+</script>
+
+<style scoped>
+
+</style>

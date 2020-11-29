@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-export const baseURL = process.env.NODE_ENV === 'production' ? `https://hit-connect.now.sh/v1` : 'http://localhost:3000/v1'
+export const baseURL = process.env.NODE_ENV === 'production' ? 'https://hitprintshop.herokuapp.com' : 'https://hitprintshop.herokuapp.com'
 
 const instance = axios.create({ baseURL })
 

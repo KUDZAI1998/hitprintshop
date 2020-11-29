@@ -1,128 +1,159 @@
 <template>
-  <v-app>
-    
-    <v-navigation-drawer    v-model="drawer" app class="elevation-1">
-    <div style="width: 100%; height: 200px;" class="primary white--text pa-3">
-      <h3 class="title mb-2">HIT Connect</h3>
-      <v-text-field
-        append-icon="search"
-        label="Search for goods and services"
-        solo
-        v-model="searchString"
-        @keyup.enter="$router.push(`/search?q=${searchString}`)"
-        flat/>
-    </div>
-    <v-list class="pt-0" dense>
-      <hr>
-      <v-list-tile v-for="item in items" :key="item.title" @click="$router.push(item.url)">
-        <v-list-tile-action>
-          <v-icon>{{ item.icon }}</v-icon>
-        </v-list-tile-action>
-        <v-list-tile-content>
-          <v-list-tile-title>{{ item.title }}</v-list-tile-title>
-        </v-list-tile-content>
-      </v-list-tile>
-    </v-list>
-  </v-navigation-drawer>
-    <v-toolbar class="elevation-1 primary" dark app>
-      <v-toolbar-title>
-      <v-btn flat fab @click="drawer = !drawer"  > <v-icon>menu</v-icon></v-btn>
-      <v-btn flat @click="$router.push('/timeline')"> <v-icon v-for="i in 3" :key="i">attach_money</v-icon></v-btn>
-      </v-toolbar-title>
-      <v-spacer></v-spacer>
+  <div>
+    <NavBar v-if="isLoggedIn" />
+    <router-view v-if="isLoggedIn"/>
+    <Login v-if="!isLoggedIn && this.$router.currentRoute.path != '/signup'"/>
+    <Signup v-if="!isLoggedIn && this.$router.currentRoute.path == '/signup'"/>
 
-      <v-btn flat v-if="isLoggedIn"> <v-icon >favorite_border</v-icon> My likes</v-btn>
-      
-      <v-menu bottom offset-y offset-y2 v-if="isLoggedIn">
-        <v-btn slot="activator" flat>
-          <v-icon  class="avatar" v-if="!authUser.picture">person</v-icon>
-          <img v-else  class="avatar" :src="authUser.picture" :alt="authUser.username" srcset="">
-        </v-btn>
-        <v-list>
-            <v-btn @click="$router.push('/logout')" class="" large block flat>
-              <v-icon left>exit_to_app</v-icon>
-              Logout
-            </v-btn>
-            <v-btn @click="$router.push('/sellers/' + authUser.username)" class="" large block flat>
-              <v-icon left>account_circle</v-icon>
-              My Account
-            </v-btn>
-            <v-btn @click="$router.push('/products/new')" class="" large block flat>
-              <v-icon left>add</v-icon>
-              Add Product
-            </v-btn>
-        </v-list>
-      </v-menu>
-      <v-btn v-if="!isLoggedIn" large class="green" @click="$router.push('/join-us')"> Join Us </v-btn>
-      <v-btn v-if="!isLoggedIn" large flat @click="$router.push('/login')"> login </v-btn>
-    </v-toolbar>
-    <v-content>
-      <div style="width: 100%; height: 30px; background: orange; text-align: center; color: white; padding: 5px;">
-        Please note that this is a beta version. You are invited to give us your <a href="">feedback</a>
+    <div class="modal fade border-0 shadow-lg" id="topup_modal">
+      <div class="modal-dialog border-0">
+        <div class="modal-content border-0">
+          <div class="modal-header border-0 shadow-lg">
+            <h6 class="modal-title font-weight-bold">
+              Topup Your Account [Ecocash/OneMoney]
+            </h6>
+          </div>
+          <div class="modal-body border-0 shadow-lg">
+            <form action="https://hitprintshop.herokuapp.com/topup" method="POST">
+              <div class="row">
+                <div class="col-md-12">
+                  <input v-model="token" type="hidden" name="token" id="token_field">
+                </div>
+              </div>
+              <div class="row p-1">
+                <div class="col-md-6">
+                  <input type="text" class="form-control border-0 shadow-lg" name="name" id="user_name" placeholder="Your Name">
+                </div>
+                <div class="col-md-6">
+                  <input type="text" class="form-control border-0 shadow-lg" name="regnumber" id="user_regnumber" placeholder="HIT School Reg Number">
+                </div>
+              </div>
+              <div class="row p-1">
+                <div class="col-md-12">
+                  <input type="tel" class="form-control border-0 shadow-lg" name="mobile" id="user_mobile" placeholder="Mobile Number">
+                </div>
+              </div>
+              <div class="row p-1">
+                <div class="col-md-12">
+                  <select class="form-control border-0 shadow-lg" name="wallet" id="mobile_wallet" required>
+                    <option value="" selected>Choose Mobile Wallet</option>
+                    <option value="onemoney">OneMoney</option>
+                    <option value="ecocash">EcoCash</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row p-1">
+                <div class="col-md-12">
+                  <input type="number" class="form-control border-0 shadow-lg" name="amount" id="topup_amount" placeholder="Amount" required>
+                </div>
+              </div>
+              <div class="row p-1">
+                <div class="col-md-12">
+                  <input type="submit" class="form-control btn border-0 shadow-lg font-weight-bold" id="topup_button" value="Topup Account">
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
       </div>
-      <router-view/>
-    </v-content>
-    <v-footer>
-      <span>&copy; 2018</span> .HIT-Connect Creative Solutions
-    </v-footer>
-  </v-app>
+    </div>
+
+    <div class="modal fade border-0 shadow-lg" id="submit_modal">
+      <div class="modal-dialog border-0">
+        <div class="modal-content border-0">
+          <div class="modal-header border-0 shadow-lg">
+            <h6 class="modal-title font-weight-bold">
+              Submit Your Document For Printing {{ pageCount }}
+            </h6>
+          </div>
+          <div class="modal-body border-0 shadow-lg">
+            <form action="https://hitprintshop.herokuapp.com/upload" method="POST" enctype="multipart/form-data">
+              <div class="row p-1">
+                <div class="col-md-12">
+                  <input v-model="token" type="hidden" name="token" id="token_field">
+                </div>
+              </div>
+              <div class="row p-1">
+                <div class="col-md-12">
+                  <input type="text" class="form-control border-0 shadow-lg" name="name" id="name" placeholder="Document Name" required>
+                </div>
+              </div>
+              <div class="row p-1">
+                <div class="col-md-10">
+                  <input @change="inputChange()" type="file" class="form-control border-0 shadow-lg" name="file" id="file" required>
+                </div>
+                <div class="col-md-2">
+                  <input type="text" v-model="pageCount" class="form-control border-0 shadow-lg" name="pagecount" id="pagecount" required>
+                </div>
+              </div>
+              <div class="row p-1">
+                <div class="col-md-12">
+                  <textarea name="instructions" id="instructions" cols="30" rows="5" class="form-control border-0 shadow-lg" placeholder="Please include submission instructions" required></textarea>
+                </div>
+              </div>
+              <div class="row p-1">
+                <div class="col-md-12">
+                  <input type="submit" class="form-control btn border-0 shadow-lg font-weight-bold" id="submit_button" value="Submit Document">
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import { CHECK_LOGIN_STATUS, CHECK_USER_PROFILE } from './store/mutation-types'
-import * as VList from 'vuetify/es5/components/VList'
-
-import {
-  VTextField,
-  VIcon,
-  VMenu
-} from 'vuetify'
+import NavBar from './components/NavBar'
+import {authenticate} from './router/guards'
+import Login from './components/auth/Login'
+import Signup from './components/auth/Signup'
+import { getAccessToken } from './utils/auth'
 export default {
+  name: 'App',
   components: {
-    VTextField,
-    VIcon,
-    VList: VList.VList,
-    VListTile: VList.VListTile,
-    VListTileAvatar: VList.VListTileAvatar,
-    VListTileContent: VList.VListTileContent,
-    VListTileAction: VList.VListTileAction,
-    VListTitle: VList.VListTitle,
-    VMenu
-  },
-  mounted () {
-    this.$store.commit(CHECK_LOGIN_STATUS)
-    this.$store.commit(CHECK_USER_PROFILE)
+    NavBar,
+    Login,
+    Signup
   },
   data () {
     return {
-      clipped: false,
-      drawer: false,
-      fixed: false,
-      items: [
-        { title: 'Home', icon: 'dashboard', url: '/' },
-        { title: 'My Products', icon: 'list', url: '/account/products' },
-        { title: 'Upload New Product', icon: 'add', url: '/products/new' }
-      ],
-      miniVariant: false,
-      right: true,
-      rightDrawer: false,
-      title: 'Hit-Connect',
-      mini: true,
-      searchString: ''
+      isLoggedIn: authenticate(),
+      token: getAccessToken(),
+      pageCount: 0,
+      reader: new FileReader()
     }
   },
-  name: 'App',
-  computed: mapGetters(['isLoggedIn', 'authUser'])
+  methods: {
+    inputChange () {
+      let file = document.getElementById('file')
+      this.reader.addEventListener('loadend', this.handleEvent)
+      this.reader.readAsBinaryString(file.files[0])
+    },
+    handleEvent (event) {
+      if (event.type === 'loadend') {
+        let count = this.reader.result.match(/\/Type[/s]*\/Page[^s]/g).length
+        this.pageCount = count
+      }
+    }
+  }
 }
 </script>
 
 <style scoped>
-  .avatar{
-    border: 2px snow solid;
-  }
-  .avatar:hover{
-    transform: scale(1.1, 1.1)
-  }
+#topup_button {
+  background-color: rgb(85, 128, 170);
+  color: #fff;
+  box-shadow: inset 0 1px 0 hsl(224, 84%, 74%);
+  box-shadow: 0 1px 3px hsla(0, 0%, 0%, 0.2);
+}
+
+#submit_button {
+  background-color: rgb(85, 128, 170);
+  color: #fff;
+  box-shadow: inset 0 1px 0 hsl(224, 84%, 74%);
+  box-shadow: 0 1px 3px hsla(0, 0%, 0%, 0.2);
+}
 </style>
 
