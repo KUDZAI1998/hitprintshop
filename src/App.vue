@@ -1,9 +1,7 @@
 <template>
   <div>
     <NavBar v-if="isLoggedIn" />
-    <router-view v-if="isLoggedIn"/>
-    <Login v-if="!isLoggedIn && this.$router.currentRoute.path != '/signup'"/>
-    <Signup v-if="!isLoggedIn && this.$router.currentRoute.path == '/signup'"/>
+    <router-view/>
 
     <div class="modal fade border-0 shadow-lg" id="topup_modal">
       <div class="modal-dialog border-0">
@@ -106,16 +104,15 @@
 
 <script>
 import NavBar from './components/NavBar'
-import {authenticate} from './router/guards'
-import Login from './components/auth/Login'
-import Signup from './components/auth/Signup'
+import {authenticate, isStudentAuthenticated} from './router/guards'
 import { getAccessToken } from './utils/auth'
 export default {
   name: 'App',
   components: {
-    NavBar,
-    Login,
-    Signup
+    NavBar
+  },
+  mounted: function () {
+    isStudentAuthenticated()
   },
   data () {
     return {

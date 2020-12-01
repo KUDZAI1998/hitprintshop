@@ -19,7 +19,7 @@ export function logout () {
   clearAccessToken()
   clearUserProfile()
   clearTokenObject()
-  window.location.reload()
+  window.location.replace('/')
 }
 
 export function requireAuth (to, from, next) {

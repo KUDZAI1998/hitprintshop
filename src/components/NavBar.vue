@@ -5,7 +5,7 @@
     <div class="collapse navbar-collapse" id="navbar">
       <ul class="nav navbar-nav ml-auto">
         <li class="nav-item">
-          <a href="/" class="nav-link font-weight-bold" id="navbar_links">Overview</a>
+          <router-link to="/" class="nav-link font-weight-bold" id="navbar_links">Overview</router-link>
         </li>
         <li class="nav-item">
           <a class="nav-link" data-toggle="modal" data-target="#topup_modal" id="navbar_links">Top Up</a>
@@ -14,7 +14,7 @@
           <a class="nav-link" data-toggle="modal" data-target="#submit_modal" id="navbar_links">Submit</a>
         </li>
         <li class="nav-item">
-          <a href="/profile" class="nav-link" id="navbar_links">Profile</a>
+          <router-link to="/profile" class="nav-link" id="navbar_links">Profile</router-link>
         </li>
         <li class="nav-item">
           <a class="nav-link dropdown" id="navbar_links" data-toggle="dropdown">Session
